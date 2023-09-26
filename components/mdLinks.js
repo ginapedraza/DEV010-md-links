@@ -34,8 +34,6 @@ const readFiles = (receivedPath) => {
         });
     };
 
-//Función para extraer los links del archivo
-
 
 
 module.exports = {

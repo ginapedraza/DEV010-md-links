@@ -46,7 +46,7 @@ const mdLinks = (receivedPath) => {
 
 //probando la promesa (esto se debe probar en otro lugar, mdLinks se debe exportar)
 mdLinks(receivedPath)
-.then((absolutePath) => {
+.then((links) => {
   //console.log('Ruta absoluta:', absolutePath);
 })
 .catch((error) => {
