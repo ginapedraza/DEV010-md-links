@@ -26,6 +26,7 @@ const readFiles = (receivedPath) => {
                       links.push(link);
                     }  
                     resolve(links);
+                    console.log(links.length);
                   };
                 // console.log('Contenido del archivo Markdown:', datos); // Con este console.log muestra todo el contenido
             });
