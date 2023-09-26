@@ -1,8 +1,6 @@
 const fs = require('fs');
 const path =  require('path');
 
-const files = fs.readdirSync('./');
-console.log(files);
 
 //Transformamos la ruta relativa a absoluta (si ya fuera absoluta, la devuelve igual)
 const transformToAbsolutePath = (receivedPath) => {

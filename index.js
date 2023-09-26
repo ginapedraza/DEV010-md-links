@@ -1,10 +1,7 @@
-const fs = require('fs');
+const fs = require('fs/promises');
 const path = require('path');
-const { transformToAbsolutePath, checkIfPathExists, checkPathExtension } =  require('./pathAnalysis');
-
-//module.exports = () => {
-  // ...
-//};
+const { transformToAbsolutePath, checkIfPathExists, checkPathExtension } =  require('./components/pathAnalysis');
+const { readFiles } = require('./components/mdLinks');
 
 //Recibimos la ruta ingresada
 const receivedPath = process.argv[2];
@@ -14,26 +11,38 @@ const mdLinks = (receivedPath) => {
   return new Promise((resolve, reject) => {
     const absolutePath = transformToAbsolutePath(receivedPath);
     // Resolver la Promesa con la ruta absoluta.
-    resolve(absolutePath);
+   resolve(absolutePath);
    console.log('Ruta absoluta:', absolutePath);
 
 // Verifica si la ruta existe
     const pathExists = checkIfPathExists(absolutePath);
-    if(!pathExists) {
-      return Promise.reject(new Error('La ruta no existe'));
-    
-    }
+      if(!pathExists) {
+        console.log('La ruta no existe')
+        return Promise.reject(new Error('La ruta no existe'));  
+      } else {
+        console.log('La ruta existe');
+      }
 
 // Verifica si es un archivo markdown
-  const fileExtension = checkPathExtension(absolutePath);
-  if(!fileExtension) {
-    return Promise.reject(new Error('El archivo no es markdown'));
-    
-  }
- 
+    const fileExtension = checkPathExtension(absolutePath);
+      if(!fileExtension) {
+        console.log('El archivo no es markdown');
+        return Promise.reject(new Error('El archivo no es markdown'));   
+       } else {
+        console.log('El archivo es markdown');
+       }
 
-});
+  //Leemos el contenido del archivo markdown y extraemos links
+    const readMarkdownFile = readFiles(absolutePath)
+      .then((links) => {
+      console.log('Enlaces encontrados:', links);
+      })
+      .catch((error) => {
+      console.error('Error:', error);
+      });
+  });
 };
+
 
 //probando la promesa (esto se debe probar en otro lugar, mdLinks se debe exportar)
 mdLinks(receivedPath)
@@ -48,6 +57,9 @@ mdLinks(receivedPath)
 module.exports = {
   mdLinks,
  };
+
+ 
+
 
 
     /*let mdFiles = [];
