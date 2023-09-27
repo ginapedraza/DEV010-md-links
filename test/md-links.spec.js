@@ -1,13 +1,17 @@
+const { transformToAbsolutePath } = require('../components/pathAnalysis');
 const { mdLinks } = require('../index');
 // const { transformToAbsolutePath, checkIfPathExists, checkPathExtension } =  require('../components/pathAnalysis');
 // const { readFiles } = require('./components/mdLinks');
 
 describe('mdLinks', () => {
-  it('deberia ser una funcion', ()=> {
-    expect(typeof mdLinks).toBe('function'); 
+  it('debería resolver con un array de enlaces cuando la ruta pasada es absoluta', () => {
+    //const receivedPath = './prueba.md';
+    return mdLinks('C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\docs\\04-milestone.md')
+      .then((result) => {
+        expect(Array.isArray(result)).toBe(true);
+      });
   }); 
-  
-  it('debería resolver con un array de enlaces', () => {
+  it('debería resolver con un array de enlaces cuando la ruta es relativa', () => {
     //const receivedPath = './prueba.md';
     return mdLinks('docs/04-milestone.md')
       .then((result) => {
@@ -54,5 +58,20 @@ it('Should return an array of Objects', () => {
         }
       ])
   }); 
+
   });
+  it('debería enviar mensaje de error cuando el archivo no es markdown', () => {
+    //const receivedPath = './prueba.md';
+    return mdLinks('thumb.png')
+      .catch((error) => {
+        expect(error).toBe('El archivo no es markdown');
+      });
+      
+});
+/*it.only('should return an array with 0 links for an .md file with no links', () => {
+  return mdLinks('docs/01-milestone.md')
+  //.then((links) => {
+    expect(console.log).toBe('No se han encontrado links'); // Verifica que no haya enlaces (el arreglo está vacío)
+  });
+});*/
 });

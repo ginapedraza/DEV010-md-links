@@ -18,7 +18,7 @@ const mdLinks = (receivedPath) => {
 // Verifica si la ruta existe
     const pathExists = checkIfPathExists(absolutePath);
       if(!pathExists) {
-        console.log('La ruta no existe')
+        //console.log('La ruta no existe')
         return reject('La ruta no existe');  
       } else {
         console.log('La ruta existe');
@@ -27,7 +27,7 @@ const mdLinks = (receivedPath) => {
 // Verifica si es un archivo markdown
     const fileExtension = checkPathExtension(absolutePath);
       if(!fileExtension) {
-        console.log('El archivo no es markdown');
+        //console.log('El archivo no es markdown');
         return reject('El archivo no es markdown');   
        } else {
         console.log('El archivo es markdown');
@@ -36,13 +36,16 @@ const mdLinks = (receivedPath) => {
   //Leemos el contenido del archivo markdown y extraemos links
     readFiles(absolutePath)
       .then((links) => {
-      //console.log('Enlaces encontrados:', links);
-      resolve(links);
+        if (links.length > 0) {
+          resolve(links);
+        } else {
+          console.log('No se han encontrado links');
+        }
       })
-      .catch((error) => {
-      console.error('Error:', error);
-      reject(error);
-      });
+      //.catch((error) => {
+      //console.error('Error:', error);
+      //reject(error);
+      //});
   });
 };
 
@@ -51,11 +54,7 @@ const mdLinks = (receivedPath) => {
 
 mdLinks(receivedPath)
   .then((links) => {
-    if (links.length === 0) {
-      console.log('No hay links');
-    } else {
-      console.log(links);
-    }
+    console.log(links);
   })
   .catch((error) => {
     console.error(error);
