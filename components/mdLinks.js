@@ -10,10 +10,10 @@ const readFiles = (receivedPath) => {
     return new Promise ((resolve, reject) => {
         fs.readFile(receivedPath, 'utf-8', (error, datos) => {
             if (error) {
-              return reject('Error al leer el archivo:', error); 
+              reject('Error al leer el archivo:', error); 
             } else {
                 //onst extractLinks = (datos, receivedPath) => {
-                    const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+                    const linkRegex = /\[(.*?)\]\((https?:\/\/.*?)\)/g;
                     const links = [];
                   
                     let match;
@@ -21,12 +21,12 @@ const readFiles = (receivedPath) => {
                       const link = {
                         text: match[1],
                         href: match[2],
-                        file: receivedPath
+                        file: receivedPath,
                       };
                       links.push(link);
                     }  
                     resolve(links);
-                    console.log(links.length);
+                    //console.log(links.length);
                   };
                 // console.log('Contenido del archivo Markdown:', datos); // Con este console.log muestra todo el contenido
             });

@@ -2,6 +2,7 @@ const fs = require('fs/promises');
 const path = require('path');
 const { transformToAbsolutePath, checkIfPathExists, checkPathExtension } =  require('./components/pathAnalysis');
 const { readFiles } = require('./components/mdLinks');
+const { error } = require('console');
 
 //Recibimos la ruta ingresada
 const receivedPath = process.argv[2];
@@ -11,14 +12,14 @@ const mdLinks = (receivedPath) => {
   return new Promise((resolve, reject) => {
     const absolutePath = transformToAbsolutePath(receivedPath);
     // Resolver la Promesa con la ruta absoluta.
-   resolve(absolutePath);
+   //resolve(absolutePath);
    console.log('Ruta absoluta:', absolutePath);
 
 // Verifica si la ruta existe
     const pathExists = checkIfPathExists(absolutePath);
       if(!pathExists) {
         console.log('La ruta no existe')
-        return Promise.reject(new Error('La ruta no existe'));  
+        return reject('La ruta no existe');  
       } else {
         console.log('La ruta existe');
       }
@@ -27,31 +28,46 @@ const mdLinks = (receivedPath) => {
     const fileExtension = checkPathExtension(absolutePath);
       if(!fileExtension) {
         console.log('El archivo no es markdown');
-        return Promise.reject(new Error('El archivo no es markdown'));   
+        return reject('El archivo no es markdown');   
        } else {
         console.log('El archivo es markdown');
        }
 
   //Leemos el contenido del archivo markdown y extraemos links
-    const readMarkdownFile = readFiles(absolutePath)
+    readFiles(absolutePath)
       .then((links) => {
-      console.log('Enlaces encontrados:', links);
+      //console.log('Enlaces encontrados:', links);
+      resolve(links);
       })
       .catch((error) => {
       console.error('Error:', error);
+      reject(error);
       });
   });
 };
 
 
 //probando la promesa (esto se debe probar en otro lugar, mdLinks se debe exportar)
+
 mdLinks(receivedPath)
-.then((links) => {
-  //console.log('Ruta absoluta:', absolutePath);
+  .then((links) => {
+    if (links.length === 0) {
+      console.log('No hay links');
+    } else {
+      console.log(links);
+    }
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+/*mdLinks(receivedPath)
+.then((readFiles) => {
+  console.log(readFiles);
 })
 .catch((error) => {
   console.error('Error:', error);
-});
+});*/
 
 
 module.exports = {
