@@ -10,7 +10,7 @@ const axios = require('axios');
 const receivedPath = process.argv[2];
 
 // Construimos la promesa
-const mdLinks = (receivedPath, validate = true) => {
+const mdLinks = (receivedPath, validate) => { 
   return new Promise((resolve, reject) => {
     const absolutePath = transformToAbsolutePath(receivedPath);
     // Resolver la Promesa con la ruta absoluta.
@@ -65,7 +65,7 @@ const mdLinks = (receivedPath, validate = true) => {
 
 //probando la promesa (esto se debe probar en otro lugar, mdLinks se debe exportar)
 
-mdLinks(receivedPath)
+mdLinks(receivedPath, true)
   .then((links) => {
     console.log(links);
   })
