@@ -1,14 +1,16 @@
 const fs = require('fs/promises');
 const path = require('path');
 const { transformToAbsolutePath, checkIfPathExists, checkPathExtension } =  require('./components/pathAnalysis');
-const { readFiles } = require('./components/mdLinks');
-const { error } = require('console');
+const { readFiles, validateLinks } = require('./components/mdLinks');
+const axios = require('axios');
+//const validateLinks = require('./components/mdLinks');
+// const { error } = require('console');
 
 //Recibimos la ruta ingresada
 const receivedPath = process.argv[2];
 
 // Construimos la promesa
-const mdLinks = (receivedPath) => {
+const mdLinks = (receivedPath, validate = true) => {
   return new Promise((resolve, reject) => {
     const absolutePath = transformToAbsolutePath(receivedPath);
     // Resolver la Promesa con la ruta absoluta.
@@ -36,16 +38,27 @@ const mdLinks = (receivedPath) => {
   //Leemos el contenido del archivo markdown y extraemos links
     readFiles(absolutePath)
       .then((links) => {
-        if (links.length > 0) {
-          resolve(links);
-        } else {
+        if (links.length === 0) {
           console.log('No se han encontrado links');
+          return resolve([]); // Retorna un arreglo vacío si no hay links
+        }
+
+        if (validate) {
+          validateLinks(links)
+            .then((results) => {
+              resolve(results);
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+              reject(error);
+            });
+        } else {
+          resolve(links);
         }
       })
-      //.catch((error) => {
-      //console.error('Error:', error);
-      //reject(error);
-      //});
+      .catch((error) => {
+        reject(error);
+      });
   });
 };
 

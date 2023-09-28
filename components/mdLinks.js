@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path =  require('path');
-
+const axios = require('axios');
 
 //const files = fs.readdirSync('./');
 //console.log(files);
@@ -33,8 +33,44 @@ const readFiles = (receivedPath) => {
             
         };
 
+        const validateLinks = (links) => {
+          //Creamos un nuevo array para almacenar las peticiones HTTP
+          const requestAxios = links.map((link) => {
+              // Para cada enlace hacemos una petición Axios para verificar su validez
+              //Con Axios hacemos solicitudes HTTP
+
+              return axios.get(link.href)
+              .then((response) => {
+                //Esto debe devolver en caso de éxito
+
+                return {
+                  text: link.text,
+                  href: link.href,
+                  file: link.file,
+                  status: response.status,
+                  message: 'Valid',
+                };
+                   // If the request is successful, update the link object with validation results.
+              })
+              .catch((error) => {
+                return {
+                  text: link.text,
+                  href: link.href,
+                  file: link.file,
+                  status: error.status,
+                  message: 'Broken',
+                };
+              });
+            });
+            
+
+          // Wait for all Axios requests to resolve and return the Promise with the updated link objects.
+          return Promise.all(requestAxios);
+      };
+
 
 
 module.exports = {
     readFiles,
+    validateLinks,
    };
