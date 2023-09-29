@@ -1,7 +1,7 @@
 const fs = require('fs/promises');
 const path = require('path');
 const { transformToAbsolutePath, checkIfPathExists, checkPathExtension } =  require('./components/pathAnalysis');
-const { readFiles, validateLinks } = require('./components/mdLinks');
+const { readFiles, validateLinks } = require('./components/linkAnalysis');
 const axios = require('axios');
 //const validateLinks = require('./components/mdLinks');
 // const { error } = require('console');
@@ -48,10 +48,10 @@ const mdLinks = (receivedPath, validate) => {
             .then((results) => {
               resolve(results);
             })
-            .catch((error) => {
+            /*.catch((error) => {
               console.error('Error:', error);
               reject(error);
-            });
+            });*/
         } else {
           resolve(links);
         }
@@ -61,25 +61,6 @@ const mdLinks = (receivedPath, validate) => {
       });
   });
 };
-
-
-//probando la promesa (esto se debe probar en otro lugar, mdLinks se debe exportar)
-
-mdLinks(receivedPath, true)
-  .then((links) => {
-    console.log(links);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-
-/*mdLinks(receivedPath)
-.then((readFiles) => {
-  console.log(readFiles);
-})
-.catch((error) => {
-  console.error('Error:', error);
-});*/
 
 
 module.exports = {

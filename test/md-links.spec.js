@@ -1,10 +1,11 @@
-const { validateLinks } = require('../components/mdLinks');
+const { validateLinks } = require('../components/linkAnalysis');
 //const { transformToAbsolutePath } = require('../components/pathAnalysis');
 const { mdLinks } = require('../index');
 const axios = require('axios');
 // const { transformToAbsolutePath, checkIfPathExists, checkPathExtension } =  require('../components/pathAnalysis');
 // const { readFiles } = require('./components/mdLinks');
 
+jest.mock('axios');
 describe('mdLinks', () => {
   it('debería resolver con un array de enlaces cuando la ruta pasada es absoluta', () => {
     //const receivedPath = './prueba.md';
@@ -29,6 +30,15 @@ describe('mdLinks', () => {
       ; // Llama a done(error) si ocurre un error durante la prueba
     });
 });
+it('should return an empty array for an .md file with no links', () => {
+  return mdLinks('docs/01-milestone.md', validate = false)
+  .then((results) => {
+    //expect(links.length).toBe(0);
+    expect(results).toEqual([]);
+    ; // Llama a done() para indicar que la prueba ha finalizado
+  })
+});
+
 it('Should return an array of Objects', () => {
   mdLinks('docs/04-milestone.md', validate = false).then((links) => {
       expect(links).toEqual( [
@@ -63,44 +73,103 @@ it('Should return an array of Objects', () => {
   });
   it('debería enviar mensaje de error cuando el archivo no es markdown', () => {
     //const receivedPath = './prueba.md';
-    return mdLinks('thumb.png', validate = false)
+    return mdLinks('thumb.png', validate = true)
       .catch((error) => {
         expect(error).toBe('El archivo no es markdown');
       });
       
 });
 
-/*it('Should return an array of Objects', () => {
-  mdLinks('prueba.md', validate = true).then((links) => {
-      expect(links).toEqual( [
-        {
-          text: 'Markdown',
-          href: 'https://es.wikipedia.org/wiki/Markdown',
-          file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\prueba.md',
-          status: 200,
-          message: 'Valid'
-        },
-        {
-          text: 'Node.js',
-          href: 'https://nodejs.org/',
-          file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\prueba.md',
-          status: 200,
-          message: 'Valid'
-        },
-        {
-          text: 'md-links',
-          href: 'https://github.com/Laboratoria/bootcamp/assets/12631491/fc6bc380-7824-4fab-ab8f-7ab53cd9d0e4',
-          file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\prueba.md',
-          status: 200,
-          message: 'Valid'
-        }
-      ])
-  }); 
+/*it('should Reject promise', () => {
+  const usersPath = 'thumb.png';
+  const validatePath = jest.fn().mockReturnValue(true);
+  const readFile = jest.fn().mockReturnValue(true);
+  const myPromise = mdLinks(usersPath, validatePath, readFile);
+  const error = new Error('Your file is not allowed');
 
-  });*/
+  return myPromise.catch(result => {
+    expect(result).toStrictEqual(error);
+  })
+})*/
+/*it.only('should log the links to the console', () => {
+  // Mockeamos console.log para capturar la salida.
+  const consoleLogSpy = jest.spyOn(console, 'log');
+  
+  return mdLinks('docs/04-milestone.md', validate = true)
+    .then(() => {
+      // Verificamos si console.log fue llamado y capturamos sus llamadas.
+      expect(consoleLogSpy).toHaveBeenCalled();
+});
+});*/
+
+
+
+it('should return status in array when validate = true', () => {
+
+    axios.get.mockResolvedValue({ status: 200 });
+    axios.get.mockResolvedValue({ status: 200 });
+    axios.get.mockResolvedValue({ status: 200 });
+
+    const linksPrueba = [
+      {
+        text: 'Markdown',
+        href: 'https://es.wikipedia.org/wiki/Markdown',
+        file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\prueba.md',
+
+      },
+      {
+        text: 'Node.js',
+        href: 'https://nodejs.org/',
+        file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\prueba.md',
+    
+      },
+      {
+        text: 'md-links',
+        href: 'https://github.com/Laboratoria/bootcamp/assets/12631491/fc6bc380-7824-4fab-ab8f-7ab53cd9d0e4',
+        file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\prueba.md',
+    
+      }
+    ]
+
+    const linksValidated = [
+      {
+        text: 'Markdown',
+        href: 'https://es.wikipedia.org/wiki/Markdown',
+        file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\prueba.md',
+        status: 200,
+        message: 'Valid'
+      },
+      {
+        text: 'Node.js',
+        href: 'https://nodejs.org/',
+        file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\prueba.md',
+        status: 200,
+        message: 'Valid'
+      },
+      {
+        text: 'md-links',
+        href: 'https://github.com/Laboratoria/bootcamp/assets/12631491/fc6bc380-7824-4fab-ab8f-7ab53cd9d0e4',
+        file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\prueba.md',
+        status: 200,
+        message: 'Valid'
+      }
+    ]
+
+
+    return mdLinks('prueba.md', validate = true).then(result => {
+      expect(result).toEqual(linksValidated);
+    })
+  })
+  it('should handle an error when making an HTTP request', () => {
+
+    axios.get.mockRejectedValue({ response: { status: 404 } });
+    return mdLinks('pruebaFail.md', validate = true).catch(error => {
+      expect(error.response.status).toBe(404)
+    })
+  })
 });
 
-jest.mock('axios');
+
 describe('validateLinks', () => {
   it('should validate three links', () => {
     axios.get.mockResolvedValue({ status: 200 });
@@ -157,10 +226,11 @@ describe('validateLinks', () => {
       expect(result).toEqual(linksValidated);
     })
   })
-})
+});
 /*it.only('should return an array with 0 links for an .md file with no links', () => {
   return mdLinks('docs/01-milestone.md')
   //.then((links) => {
     expect(console.log).toBe('No se han encontrado links'); // Verifica que no haya enlaces (el arreglo está vacío)
-  });
-});*/
+  });*/
+
+
