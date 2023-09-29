@@ -2,9 +2,9 @@ const fs = require('fs');
 const path =  require('path');
 const axios = require('axios');
 
-//Probando leer directorios
-const files = fs.readdirSync('./examples');
-console.log(files);
+
+
+
 
 //Función para leer el archivo markdown
 const readFiles = (receivedPath) => {

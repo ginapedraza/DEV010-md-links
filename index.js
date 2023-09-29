@@ -1,6 +1,6 @@
-const fs = require('fs/promises');
+const fs = require('fs');
 const path = require('path');
-const { transformToAbsolutePath, checkIfPathExists, checkPathExtension } =  require('./components/pathAnalysis');
+const { transformToAbsolutePath, checkIfPathExists, readDirectory, checkPathExtension } =  require('./components/pathAnalysis');
 const { readFiles, validateLinks } = require('./components/linkAnalysis');
 const axios = require('axios');
 //const validateLinks = require('./components/mdLinks');
@@ -26,39 +26,60 @@ const mdLinks = (receivedPath, validate) => {
         console.log('La ruta existe');
       }
 
-// Verifica si es un archivo markdown
+      const stats = fs.statSync(absolutePath);
+      
+  //Verifica si es directorio o archivo
+  if(stats.isDirectory()) {
+    const files = readDirectory(absolutePath);
+    //console.log(files);
+    const promises = files.map(file => {
+      readFiles(file)
+      .then((links) => {
+        //console.log(links);
+        if (validate) {
+          return validateLinks(links)//-------------------------------------------------------------
+          .then((results) => { //Me esta devolviendo solo un link validado
+            resolve(results);//-------------------------------------------------------------------
+          })
+        }
+    });
+
+    })
+    } else {
+    // Verifica si es un archivo markdown
     const fileExtension = checkPathExtension(absolutePath);
       if(!fileExtension) {
-        //console.log('El archivo no es markdown');
-        return reject('El archivo no es markdown');   
-       } else {
-        console.log('El archivo es markdown');
-       }
+      //console.log('El archivo no es markdown');
+      return reject('El archivo no es markdown');   
+      } else {
+      console.log('El archivo es markdown');
+      }
 
   //Leemos el contenido del archivo markdown y extraemos links
-    readFiles(absolutePath)
-      .then((links) => {
-        if (links.length === 0) {
-          console.log('No se han encontrado links');
-          return resolve([]); // Retorna un arreglo vacío si no hay links
-        }
+  readFiles(absolutePath)
+    .then((links) => {
+    if (links.length === 0) {
+    console.log('No se han encontrado links');
+    return resolve([]); // Retorna un arreglo vacío si no hay links
+    }
 
-        if (validate) {
-          validateLinks(links)
-            .then((results) => {
-              resolve(results);
-            })
-            /*.catch((error) => {
-              console.error('Error:', error);
-              reject(error);
-            });*/
-        } else {
-          resolve(links);
-        }
+    if (validate) {
+      validateLinks(links)
+      .then((results) => {
+        resolve(results);
       })
-      .catch((error) => {
+      /*.catch((error) => {
+        console.error('Error:', error);
         reject(error);
-      });
+      });*/
+    } else {
+      resolve(links);
+    }
+  })
+    .catch((error) => {
+      reject(error);
+    });
+  };
   });
 };
 

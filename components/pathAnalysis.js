@@ -24,6 +24,27 @@ const checkIfPathExists = (receivedPath) => {
 
 };
 
+//Leemos directorios
+const readDirectory = (receivedPath) => {
+  const files = fs.readdirSync(receivedPath);
+  let mdFiles = [];
+  files.forEach(file => {
+    const fullPath = path.join(receivedPath, file);
+    const fileStats = fs.statSync(fullPath);
+
+    if (fileStats.isFile() && file.endsWith('.md')) {
+      mdFiles.push(fullPath);
+    } else if (fileStats.isDirectory()) {
+    
+      mdFiles = mdFiles.concat(readDir(fullPath));
+    }
+  });
+  console.log(mdFiles);
+  return mdFiles;
+
+  //return files;
+}
+
 //Verificamos que sea un archivo markdown
 const checkPathExtension = (receivedPath) => {
   const extension = path.extname(receivedPath);
@@ -42,6 +63,7 @@ module.exports = {
     transformToAbsolutePath,
     checkIfPathExists,
     checkPathExtension,
+    readDirectory,
    };
   
 
