@@ -54,7 +54,6 @@ const mdLinks = (receivedPath, validate) => {
     // Verifica si es un archivo markdown
     const fileExtension = checkPathExtension(absolutePath);
       if(!fileExtension) {
-      //console.log('El archivo no es markdown');
       return reject('El archivo no es markdown');   
       } else {
       console.log('El archivo es markdown');
@@ -82,6 +81,7 @@ const mdLinks = (receivedPath, validate) => {
     }
   })
     .catch((error) => {
+      console.error('Ocurrió un problema al leer la ruta especificada')
       reject(error);
     });
   };

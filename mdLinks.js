@@ -1,6 +1,6 @@
 const { mdLinks } = require('./index');
 
-let receivedPath = './examples';
+let receivedPath = 'prueba.md';
 
 mdLinks(receivedPath, true)
   .then((links) => {

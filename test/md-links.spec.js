@@ -223,6 +223,15 @@ it('should return status in array when validate = true', () => {
       expect(links).toEqual(linksExamples);
     })
   })
+
+  it('debería enviar mensaje de error cuando la ruta no existe', () => {
+    return mdLinks('example.md', validate = true)
+      .catch((error) => {
+        expect(error).toBe('La ruta no existe');
+      });
+      
+});
+
 });
 
 

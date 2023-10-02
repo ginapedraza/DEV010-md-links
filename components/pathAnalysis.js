@@ -31,8 +31,11 @@ const readDirectory = (receivedPath) => {
   files.forEach(file => { //Iteramos sobre los archivos
     const fullPath = path.join(receivedPath, file); // acá unimos las rutas
     const fileStats = fs.statSync(fullPath); //Obtenemos estadísticas del archivo para verificar si es archivo o directorio
+    const extension = path.extname(fullPath);
+    const validExtensions = ['.md', '.mkd', '.mdwn', '.mdown', '.mdtxt', '.mdtext', '.markdown', '.text'];
+    const pathIsMarkdown = validExtensions.includes(extension);
 
-    if (fileStats.isFile() && file.endsWith('.md')) {
+    if (fileStats.isFile() && pathIsMarkdown) {
       mdFiles.push(fullPath); //Si es archivo md lo agregamos al array que creamos
     } else if (fileStats.isDirectory()) {
     //Si es directorio, llaamos recursivamente a la función readDirectory para explorar los archivos
