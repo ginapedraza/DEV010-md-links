@@ -49,7 +49,7 @@ const readFiles = (receivedPath) => {
                   href: link.href,
                   file: link.file,
                   status: response.status,
-                  message: 'Valid',
+                  message: 'Ok',
                 };
                    // If the request is successful, update the link object with validation results.
               })
@@ -59,7 +59,7 @@ const readFiles = (receivedPath) => {
                   href: link.href,
                   file: link.file,
                   status: error.status,
-                  message: 'Broken',
+                  message: 'Fail',
                 };
               });
             });
