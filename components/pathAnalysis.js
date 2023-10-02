@@ -26,17 +26,17 @@ const checkIfPathExists = (receivedPath) => {
 
 //Leemos directorios
 const readDirectory = (receivedPath) => {
-  const files = fs.readdirSync(receivedPath);
-  let mdFiles = [];
-  files.forEach(file => {
-    const fullPath = path.join(receivedPath, file);
-    const fileStats = fs.statSync(fullPath);
+  const files = fs.readdirSync(receivedPath); // Leemos los nombres de los archivos de forma síncrona
+  let mdFiles = []; // Creamos un array para almacenar los archivos md que encontremos
+  files.forEach(file => { //Iteramos sobre los archivos
+    const fullPath = path.join(receivedPath, file); // acá unimos las rutas
+    const fileStats = fs.statSync(fullPath); //Obtenemos estadísticas del archivo para verificar si es archivo o directorio
 
     if (fileStats.isFile() && file.endsWith('.md')) {
-      mdFiles.push(fullPath);
+      mdFiles.push(fullPath); //Si es archivo md lo agregamos al array que creamos
     } else if (fileStats.isDirectory()) {
-    
-      mdFiles = mdFiles.concat(readDir(fullPath));
+    //Si es directorio, llaamos recursivamente a la función readDirectory para explorar los archivos
+      mdFiles = mdFiles.concat(readDirectory(fullPath));
     }
   });
   console.log(mdFiles);

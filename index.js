@@ -31,20 +31,25 @@ const mdLinks = (receivedPath, validate) => {
   //Verifica si es directorio o archivo
   if(stats.isDirectory()) {
     const files = readDirectory(absolutePath);
-    //console.log(files);
-    const promises = files.map(file => {
-      readFiles(file)
-      .then((links) => {
-        //console.log(links);
-        if (validate) {
-          return validateLinks(links)//-------------------------------------------------------------
-          .then((results) => { //Me esta devolviendo solo un link validado
-            resolve(results);//-------------------------------------------------------------------
-          })
-        }
+  const promises = files.map(file => {
+    return readFiles(file)
+    .then((links) => {
+      if (validate) {
+        return validateLinks(links);
+      }
+      return links; // Devuelve los links sin validar si no es necesario
     });
+  });
 
+  // Espera a que todas las promesas se resuelvan y aplanar los resultados
+  Promise.all(promises)
+    .then(results => {
+      const links = results.flat(); // Aplanar el array de arrays de links
+      resolve(links);
     })
+    .catch(error => {
+      reject(error);
+    });
     } else {
     // Verifica si es un archivo markdown
     const fileExtension = checkPathExtension(absolutePath);

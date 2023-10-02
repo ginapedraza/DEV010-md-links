@@ -80,29 +80,6 @@ it('Should return an array of Objects', () => {
       
 });
 
-/*it('should Reject promise', () => {
-  const usersPath = 'thumb.png';
-  const validatePath = jest.fn().mockReturnValue(true);
-  const readFile = jest.fn().mockReturnValue(true);
-  const myPromise = mdLinks(usersPath, validatePath, readFile);
-  const error = new Error('Your file is not allowed');
-
-  return myPromise.catch(result => {
-    expect(result).toStrictEqual(error);
-  })
-})*/
-/*it.only('should log the links to the console', () => {
-  // Mockeamos console.log para capturar la salida.
-  const consoleLogSpy = jest.spyOn(console, 'log');
-  
-  return mdLinks('docs/04-milestone.md', validate = true)
-    .then(() => {
-      // Verificamos si console.log fue llamado y capturamos sus llamadas.
-      expect(consoleLogSpy).toHaveBeenCalled();
-});
-});*/
-
-
 
 it('should return status in array when validate = true', () => {
 
@@ -165,6 +142,85 @@ it('should return status in array when validate = true', () => {
     axios.get.mockRejectedValue({ response: { status: 404 } });
     return mdLinks('pruebaFail.md', validate = true).catch(error => {
       expect(error.response.status).toBe(404)
+    })
+  })
+
+  it('should return status in array when validate = true and the received path is a directory', () => {
+
+    axios.get.mockResolvedValue({ status: 200 });
+    axios.get.mockResolvedValue({ status: 200 });
+    axios.get.mockResolvedValue({ status: 200 });
+
+    const linksExamples = [
+      {
+        text: 'NPM',
+        href: 'https://www.npmjs.com/',
+        file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\examples\\example2.md'
+      },
+      {
+        text: 'mdlinks-example-stats',
+        href: 'https://github.com/Laboratoria/bootcamp/assets/123121338/910720c6-aa3f-4d08-b076-c1add13c95f1',
+        file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\examples\\example3.md'
+      },
+      {
+        text: 'mdlinks-example-stats-validate',
+        href: 'https://github.com/Laboratoria/bootcamp/assets/123121338/9d9971a0-866a-4c64-a890-4c62c3df3700',
+        file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\examples\\example3.md'
+      }
+    ]
+
+    const linksExamplesValidated = [
+      {
+        text: 'NPM',
+        href: 'https://www.npmjs.com/',
+        file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\examples\\example2.md',
+        status: 200,
+        message: 'Valid'
+      },
+      {
+        text: 'mdlinks-example-stats',
+        href: 'https://github.com/Laboratoria/bootcamp/assets/123121338/910720c6-aa3f-4d08-b076-c1add13c95f1',
+        file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\examples\\example3.md',
+        status: 200,
+        message: 'Valid'
+      },
+      {
+        text: 'mdlinks-example-stats-validate',
+        href: 'https://github.com/Laboratoria/bootcamp/assets/123121338/9d9971a0-866a-4c64-a890-4c62c3df3700',
+        file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\examples\\example3.md',
+        status: 200,
+        message: 'Valid'
+      }
+    ]
+
+
+    return mdLinks('./examples', validate = true).then(result => {
+      expect(result).toEqual(linksExamplesValidated);
+    })
+  })
+
+  it('should return status in array when validate = false and the received path is a directory', () => {
+
+    const linksExamples = [
+      {
+        text: 'NPM',
+        href: 'https://www.npmjs.com/',
+        file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\examples\\example2.md'
+      },
+      {
+        text: 'mdlinks-example-stats',
+        href: 'https://github.com/Laboratoria/bootcamp/assets/123121338/910720c6-aa3f-4d08-b076-c1add13c95f1',
+        file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\examples\\example3.md'
+      },
+      {
+        text: 'mdlinks-example-stats-validate',
+        href: 'https://github.com/Laboratoria/bootcamp/assets/123121338/9d9971a0-866a-4c64-a890-4c62c3df3700',
+        file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\examples\\example3.md'
+      }
+    ]
+
+    return mdLinks('./examples', validate = false).then(links => {
+      expect(links).toEqual(linksExamples);
     })
   })
 });
