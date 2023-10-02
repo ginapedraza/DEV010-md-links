@@ -114,21 +114,21 @@ it('should return status in array when validate = true', () => {
         href: 'https://es.wikipedia.org/wiki/Markdown',
         file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\prueba.md',
         status: 200,
-        message: 'Valid'
+        message: 'Ok'
       },
       {
         text: 'Node.js',
         href: 'https://nodejs.org/',
         file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\prueba.md',
         status: 200,
-        message: 'Valid'
+        message: 'Ok'
       },
       {
         text: 'md-links',
         href: 'https://github.com/Laboratoria/bootcamp/assets/12631491/fc6bc380-7824-4fab-ab8f-7ab53cd9d0e4',
         file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\prueba.md',
         status: 200,
-        message: 'Valid'
+        message: 'Ok'
       }
     ]
 
@@ -175,21 +175,21 @@ it('should return status in array when validate = true', () => {
         href: 'https://www.npmjs.com/',
         file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\examples\\example2.md',
         status: 200,
-        message: 'Valid'
+        message: 'Ok'
       },
       {
         text: 'mdlinks-example-stats',
         href: 'https://github.com/Laboratoria/bootcamp/assets/123121338/910720c6-aa3f-4d08-b076-c1add13c95f1',
         file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\examples\\example3.md',
         status: 200,
-        message: 'Valid'
+        message: 'Ok'
       },
       {
         text: 'mdlinks-example-stats-validate',
         href: 'https://github.com/Laboratoria/bootcamp/assets/123121338/9d9971a0-866a-4c64-a890-4c62c3df3700',
         file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\examples\\example3.md',
         status: 200,
-        message: 'Valid'
+        message: 'Ok'
       }
     ]
 
@@ -268,21 +268,21 @@ describe('validateLinks', () => {
         href: 'https://es.wikipedia.org/wiki/Markdown',
         file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\prueba.md',
         status: 200,
-        message: 'Valid'
+        message: 'Ok'
       },
       {
         text: 'Node.js',
         href: 'https://nodejs.org/',
         file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\prueba.md',
         status: 200,
-        message: 'Valid'
+        message: 'Ok'
       },
       {
         text: 'md-links',
         href: 'https://github.com/Laboratoria/bootcamp/assets/12631491/fc6bc380-7824-4fab-ab8f-7ab53cd9d0e4',
         file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\prueba.md',
         status: 200,
-        message: 'Valid'
+        message: 'Ok'
       }
     ]
 
