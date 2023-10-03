@@ -7,7 +7,7 @@ const axios = require('axios');
 // const { error } = require('console');
 
 //Recibimos la ruta ingresada
-const receivedPath = process.argv[2];
+//const receivedPath = process.argv[2];
 
 // Construimos la promesa
 const mdLinks = (receivedPath, validate) => { 
@@ -93,39 +93,3 @@ module.exports = {
   mdLinks,
  };
 
- 
-
-
-
-    /*let mdFiles = [];
-    const stats = fs.statSync(absolutePath);
-
-    if (stats.isDirectory()) {
-      // Si la ruta es un directorio, leer los archivos .md dentro de él
-      mdFiles = readDir(absolutePath);
-      console.log('es un directorio:', mdFiles);
-    } else if (stats.isFile() && path.extname(absolutePath) === ".md") {
-      // Si la ruta es un archivo .md, agregarlo al array de archivos .md
-      mdFiles = [absolutePath];
-      console.log('es un archivo:',mdFiles);
-    } else {
-      // Si la ruta no es un directorio ni un archivo .md válido, rechazar la promesa con un mensaje de error
-      reject("La ruta especificada no es un directorio ni un archivo .md válido.");
-      return;
-    }*/
-
-
-    //Comprobando si el archivo existe, si es file o directory
-/*fs.stat(absolutePath, (err, stats) => {
-  if( !err ){
-       if(stats.isFile()){
-           console.log('is file ? ' + stats.isFile());
-       }
- 
-       else if(stats.isDirectory()){
-           console.log('is directory? ' + stats.isDirectory());
-       }
-   }
-   else
-       throw err; 
-});*/

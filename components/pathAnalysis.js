@@ -30,6 +30,7 @@ const readDirectory = (receivedPath) => {
   let mdFiles = []; // Creamos un array para almacenar los archivos md que encontremos
   files.forEach(file => { //Iteramos sobre los archivos
     const fullPath = path.join(receivedPath, file); // acá unimos las rutas
+    //console.log(fullPath);
     const fileStats = fs.statSync(fullPath); //Obtenemos estadísticas del archivo para verificar si es archivo o directorio
     const extension = path.extname(fullPath);
     const validExtensions = ['.md', '.mkd', '.mdwn', '.mdown', '.mdtxt', '.mdtext', '.markdown', '.text'];

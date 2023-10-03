@@ -1,40 +1,34 @@
 const { validateLinks } = require('../components/linkAnalysis');
-//const { transformToAbsolutePath } = require('../components/pathAnalysis');
 const { mdLinks } = require('../index');
 const axios = require('axios');
-// const { transformToAbsolutePath, checkIfPathExists, checkPathExtension } =  require('../components/pathAnalysis');
-// const { readFiles } = require('./components/mdLinks');
+
 
 jest.mock('axios');
 describe('mdLinks', () => {
   it('debería resolver con un array de enlaces cuando la ruta pasada es absoluta', () => {
-    //const receivedPath = './prueba.md';
     return mdLinks('C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\docs\\04-milestone.md', validate = false)
-      .then((result) => {
-        expect(Array.isArray(result)).toBe(true);
+      .then((links) => {
+        expect(Array.isArray(links)).toBe(true);
       });
   }); 
   it('debería resolver con un array de enlaces cuando la ruta es relativa', () => {
     return mdLinks('docs/04-milestone.md', validate = false)
-      .then((result) => {
-        expect(Array.isArray(result)).toBe(true);
+      .then((links) => {
+        expect(Array.isArray(links)).toBe(true);
       });
   }); 
   it('should return an array with 5 links for an .md file with 5 links', () => {
     return mdLinks('docs/04-milestone.md', validate = false)
     .then((links) => {
       expect(links.length).toBe(5);
-      ; // Llama a done() para indicar que la prueba ha finalizado
     })
     .catch((error) => {
-      ; // Llama a done(error) si ocurre un error durante la prueba
     });
 });
 it('should return an empty array for an .md file with no links', () => {
   return mdLinks('docs/01-milestone.md', validate = false)
-  .then((results) => {
-    //expect(links.length).toBe(0);
-    expect(results).toEqual([]);
+  .then((links) => {
+    expect(links).toEqual([]);
     ; // Llama a done() para indicar que la prueba ha finalizado
   })
 });
