@@ -17,7 +17,7 @@ const mdLinks = (receivedPath, validate) => {
     const pathExists = checkIfPathExists(absolutePath);
       if(!pathExists) {
         //console.log('La ruta no existe')
-        return reject(colors.red('La ruta no existe'));  
+        return reject('La ruta no existe');  
       } else {
         console.log(colors.blue('\u2B50 ¡La ruta existe en la computadora!'));
       }
@@ -50,7 +50,7 @@ const mdLinks = (receivedPath, validate) => {
     // Verifica si es un archivo markdown
     const fileExtension = checkPathExtension(absolutePath);
       if(!fileExtension) {
-      return reject(colors.red('El archivo no es markdown'));   
+      return reject('El archivo no es markdown');   
       } else {
       console.log(colors.blue('\u2B50 El archivo es markdown'));
       }
