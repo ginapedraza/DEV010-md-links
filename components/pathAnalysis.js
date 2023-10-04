@@ -43,8 +43,10 @@ const readDirectory = (receivedPath) => {
     //Si es directorio, llamamos recursivamente a la función readDirectory para explorar los archivos
       mdFiles = mdFiles.concat(readDirectory(fullPath));
     }
+    //console.log(fileStats);
   });
   console.log(colors.blue('\u2B50 Archivos markdown encontrados:', mdFiles));
+  
   return mdFiles;
 }
 

@@ -58,7 +58,7 @@ const readFiles = (receivedPath) => {
                   text: link.text,
                   href: link.href,
                   file: link.file,
-                  status: error.status,
+                  status: error.response.status,
                   message: 'Fail',
                 };
               });
