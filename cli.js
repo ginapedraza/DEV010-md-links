@@ -18,7 +18,7 @@ if (validateOption) {
   .then((links) => {
     links.forEach(link => {
         const truncatedText = link.text.length > 50 ? link.text.slice(0, 50) + '...' : link.text;
-        console.log(colors.green(receivedPath), colors.blue(link.href), colors.red(link.message), colors.white(link.status), colors.yellow(truncatedText));
+        console.log(colors.magenta(receivedPath), colors.green(link.href), colors.cyan(link.message), colors.cyan(link.status), colors.yellow(truncatedText));
     })
    
   })
@@ -32,7 +32,7 @@ if (validateOption) {
           //const file = fs.readdirSync(receivedPath);
           //const fullPath = receivedPath.join(receivedPath, file);
           const truncatedText = link.text.length > 50 ? link.text.slice(0, 50) + '...' : link.text;
-          console.log(colors.green(receivedPath), colors.blue(link.href), colors.yellow(truncatedText));
+          console.log(colors.magenta(receivedPath), colors.green(link.href), colors.yellow(truncatedText));
           
       });
   })

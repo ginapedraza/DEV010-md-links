@@ -3,11 +3,7 @@ const path = require('path');
 const { transformToAbsolutePath, checkIfPathExists, readDirectory, checkPathExtension } =  require('./components/pathAnalysis');
 const { readFiles, validateLinks } = require('./components/linkAnalysis');
 const axios = require('axios');
-//const validateLinks = require('./components/mdLinks');
-// const { error } = require('console');
-
-//Recibimos la ruta ingresada
-//const receivedPath = process.argv[2];
+const colors = require('colors');
 
 // Construimos la promesa
 const mdLinks = (receivedPath, validate) => { 
@@ -15,15 +11,15 @@ const mdLinks = (receivedPath, validate) => {
     const absolutePath = transformToAbsolutePath(receivedPath);
     // Resolver la Promesa con la ruta absoluta.
    //resolve(absolutePath);
-   console.log('Ruta absoluta:', absolutePath);
+   console.log(colors.blue('\u2B50 Ruta absoluta =>', absolutePath));
 
 // Verifica si la ruta existe
     const pathExists = checkIfPathExists(absolutePath);
       if(!pathExists) {
         //console.log('La ruta no existe')
-        return reject('La ruta no existe');  
+        return reject(colors.red('La ruta no existe'));  
       } else {
-        console.log('La ruta existe');
+        console.log(colors.blue('\u2B50 ¡La ruta existe en la computadora!'));
       }
 
       const stats = fs.statSync(absolutePath);
@@ -54,16 +50,16 @@ const mdLinks = (receivedPath, validate) => {
     // Verifica si es un archivo markdown
     const fileExtension = checkPathExtension(absolutePath);
       if(!fileExtension) {
-      return reject('El archivo no es markdown');   
+      return reject(colors.red('El archivo no es markdown'));   
       } else {
-      console.log('El archivo es markdown');
+      console.log(colors.blue('\u2B50 El archivo es markdown'));
       }
 
   //Leemos el contenido del archivo markdown y extraemos links
   readFiles(absolutePath)
     .then((links) => {
     if (links.length === 0) {
-    console.log('No se han encontrado links');
+    console.log(colors.red('No se han encontrado links'));
     return resolve([]); // Retorna un arreglo vacío si no hay links
     }
 
@@ -81,7 +77,7 @@ const mdLinks = (receivedPath, validate) => {
     }
   })
     .catch((error) => {
-      console.error('Ocurrió un problema al leer la ruta especificada')
+      console.error(colors.red('Ocurrió un problema al leer la ruta especificada'));
       reject(error);
     });
   };

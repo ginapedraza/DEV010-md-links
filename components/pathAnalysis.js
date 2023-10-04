@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path =  require('path');
+const colors = require('colors');
 
 
 //Transformamos la ruta relativa a absoluta (si ya fuera absoluta, la devuelve igual)
@@ -10,7 +11,7 @@ const transformToAbsolutePath = (receivedPath) => {
     return receivedPath; // Si la ruta es absoluta, retornarla sin cambios
   } else {
     // Si la ruta es relativa, convertirla a una ruta absoluta
-    console.log('Transformamos a ruta absoluta');
+    //console.log('Transformamos a ruta absoluta');
     const absolutePath = path.resolve(process.cwd(), receivedPath);
     return absolutePath;
   }
@@ -19,7 +20,7 @@ const transformToAbsolutePath = (receivedPath) => {
 //Verificamos que la ruta exista en la computadora
 const checkIfPathExists = (receivedPath) => {
   const pathExists = fs.existsSync(receivedPath);
-  console.log(pathExists);
+  //console.log(pathExists);
   return pathExists;
 
 };
@@ -39,14 +40,12 @@ const readDirectory = (receivedPath) => {
     if (fileStats.isFile() && pathIsMarkdown) {
       mdFiles.push(fullPath); //Si es archivo md lo agregamos al array que creamos
     } else if (fileStats.isDirectory()) {
-    //Si es directorio, llaamos recursivamente a la función readDirectory para explorar los archivos
+    //Si es directorio, llamamos recursivamente a la función readDirectory para explorar los archivos
       mdFiles = mdFiles.concat(readDirectory(fullPath));
     }
   });
-  console.log(mdFiles);
+  console.log(colors.blue('\u2B50 Archivos markdown encontrados:', mdFiles));
   return mdFiles;
-
-  //return files;
 }
 
 //Verificamos que sea un archivo markdown
@@ -54,7 +53,7 @@ const checkPathExtension = (receivedPath) => {
   const extension = path.extname(receivedPath);
   const validExtensions = ['.md', '.mkd', '.mdwn', '.mdown', '.mdtxt', '.mdtext', '.markdown', '.text'];
   const pathIsMarkdown = validExtensions.includes(extension);
-  console.log(pathIsMarkdown);
+ //console.log(pathIsMarkdown);
   return pathIsMarkdown;
    // console.log('El archivo es markdown');
   //} else {
