@@ -46,8 +46,8 @@ if (validateOption && statsOption) {
   mdLinks(receivedPath, false)
   .then((links) => {
       const uniqueLinks = new Set(links.map(link => link.href)); // Esto se encarga de crear un nuevo conjunto o set de links a partir de los valores href de cada link.  
-      console.log('🔗 Cantidad de links:', links.length);
-      console.log('🔗 Enlaces únicos:', uniqueLinks.size);
+      console.log('🔗Cantidad de links:', links.length);
+      console.log('🔗Enlaces únicos:', uniqueLinks.size);
     })
   .catch((error) => {
     console.error(error);

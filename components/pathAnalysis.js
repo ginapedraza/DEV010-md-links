@@ -32,20 +32,24 @@ const readDirectory = (receivedPath) => {
   files.forEach(file => { //Iteramos sobre los archivos
     const fullPath = path.join(receivedPath, file); // acá unimos las rutas
     //console.log(fullPath);
-    //const fileStats = fs.statSync(fullPath); //Obtenemos estadísticas del archivo para verificar si es archivo o directorio
+    const fileStats = fs.statSync(fullPath); //Obtenemos estadísticas del archivo para verificar si es archivo o directorio
     const extension = path.extname(fullPath);
     const validExtensions = ['.md', '.mkd', '.mdwn', '.mdown', '.mdtxt', '.mdtext', '.markdown', '.text'];
     const pathIsMarkdown = validExtensions.includes(extension);
+    const simpleFile = fileStats.isFile(); // Verifica si es file
+    const subDirectory = fileStats.isDirectory(); // Verifica si es directorio
 
-    if (pathIsMarkdown) {
-      mdFiles.push(fullPath); //Si es archivo md lo agregamos al array que creamos
-    } //else if (fileStats.isDirectory()) {
+    if (simpleFile && pathIsMarkdown) {
+      mdFiles.push(fullPath);   //Si es archivo md lo agregamos al array que creamos
+     // console.log(colors.blue('\u2B50 Archivos markdown encontrados:', mdFiles));
+    } else if (subDirectory) {
     //Si es directorio, llamamos recursivamente a la función readDirectory para explorar los archivos
-     // mdFiles = mdFiles.concat(readDirectory(fullPath));
-    });
+     mdFiles = mdFiles.concat(readDirectory(fullPath));
+     console.log(colors.blue('\u2B50 Archivos markdown encontrados:', mdFiles));
+    };
     //console.log(fileStats);
-  //});
-  console.log(colors.blue('\u2B50 Archivos markdown encontrados:', mdFiles));
+  });
+  
   
   return mdFiles;
 }
