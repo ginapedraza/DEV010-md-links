@@ -21,8 +21,9 @@ El primer paso para lograr el funcionamiento, se logró a través de un diagrama
 
 Ejecutar el siguiente comando en la terminal:
 
+```shell
 npm install ginapedraza/DEV010-md-links
-
+```
 
 ## 3. Funcionamiento
 
