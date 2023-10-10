@@ -2,7 +2,6 @@
 
 ## Descripción del proyecto
 
-
 mdLinks es una librería en Node.js que facilita la verificación, lectura y análisis de enlaces en archivos Markdown. 👩‍💻 Es ideal para garantizar la calidad de la documentación en tus proyectos.
 
 ✅ Con mdLinks, puedes:
