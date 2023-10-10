@@ -160,6 +160,11 @@ it('should return status in array when validate = true', () => {
         text: 'mdlinks-example-stats-validate',
         href: 'https://github.com/Laboratoria/bootcamp/assets/123121338/9d9971a0-866a-4c64-a890-4c62c3df3700',
         file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\examples\\example3.md'
+      },
+      {
+        text: 'Markdown',
+        href: 'https://es.wikipedia.org/wiki/Markdown',
+        file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\examples\\examplesDir\\example-01-milestone.md'
       }
     ]
 
@@ -182,6 +187,13 @@ it('should return status in array when validate = true', () => {
         text: 'mdlinks-example-stats-validate',
         href: 'https://github.com/Laboratoria/bootcamp/assets/123121338/9d9971a0-866a-4c64-a890-4c62c3df3700',
         file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\examples\\example3.md',
+        status: 200,
+        message: 'Ok'
+      },
+      {
+        text: 'Markdown',
+        href: 'https://es.wikipedia.org/wiki/Markdown',
+        file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\examples\\examplesDir\\example-01-milestone.md',
         status: 200,
         message: 'Ok'
       }
@@ -210,6 +222,11 @@ it('should return status in array when validate = true', () => {
         text: 'mdlinks-example-stats-validate',
         href: 'https://github.com/Laboratoria/bootcamp/assets/123121338/9d9971a0-866a-4c64-a890-4c62c3df3700',
         file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\examples\\example3.md'
+      },
+      {
+        text: 'Markdown',
+        href: 'https://es.wikipedia.org/wiki/Markdown',
+        file: 'C:\\Users\\Juan Viloria\\Desktop\\LABORATORIA\\BOOTCAMP\\4to proyecto\\DEV010-md-links\\examples\\examplesDir\\example-01-milestone.md'
       }
     ]
 

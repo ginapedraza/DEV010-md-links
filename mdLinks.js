@@ -2,7 +2,7 @@ const { mdLinks } = require('./index');
 
 let receivedPath = './examples';
 
-mdLinks(receivedPath, true)
+mdLinks(receivedPath, false)
   .then((links) => {
     console.log(links);
   })
