@@ -7,7 +7,7 @@ mdLinks es una librería en Node.js que facilita la verificación, lectura y an�
 
 ✅ Con mdLinks, puedes:
 
-Detectar enlaces repetidos, rotos o válidos.
+Detectar enlaces rotos o válidos.
 Asegurarte de que los enlaces estén en buen estado.
 Evitar problemas para los usuarios al identificar enlaces a páginas inexistentes.
 
